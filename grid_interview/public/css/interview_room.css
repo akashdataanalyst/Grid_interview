@@ -1,0 +1,22 @@
+.gi-room { max-width: 1280px; margin: 0 auto; padding: 12px 0 32px; }
+.gi-room-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.gi-room-head h1 { font-size: 1.35rem; margin: 0; }
+.gi-room-status { display: flex; gap: 6px; flex-wrap: wrap; }
+.gi-pill.red { background: #fee2e2; color: #991b1b; }
+.gi-room-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; margin-top: 12px; }
+.gi-stage { min-width: 0; }
+.gi-prejoin, .gi-mock { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.gi-prejoin video, .gi-mock video { width: 100%; max-width: 640px; aspect-ratio: 16 / 9; background: #111827; border-radius: 10px; object-fit: cover; }
+.gi-devices { display: flex; gap: 6px; flex-wrap: wrap; }
+.gi-meeting { width: 100%; height: min(72vh, 720px); border-radius: 10px; overflow: hidden; background: #111827; }
+.gi-meeting iframe { width: 100%; height: 100%; border: 0; }
+.gi-room-actions { display: flex; gap: 8px; margin-top: 12px; }
+.gi-side .gi-card h3 { font-size: 1rem; }
+.gi-side dl { margin: 0; }
+.gi-side dt { font-size: 0.8rem; color: var(--text-muted, #6b7280); margin-top: 8px; }
+.gi-side dd { margin: 0; }
+.gi-side ul { padding-left: 18px; margin: 4px 0 0; }
+@media (max-width: 900px) {
+	.gi-room-grid { grid-template-columns: 1fr; }
+	.gi-meeting { height: 60vh; }
+}

@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.DS_Store
+node_modules/
+grid_interview/public/dist/
+.env
+*.log

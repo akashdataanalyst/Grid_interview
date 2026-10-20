@@ -1,0 +1,15 @@
+{% if audience == "Candidate" %}
+<p>{{ _("Dear {0},").format(candidate_name) }}</p>
+<p>{{ _("Your online interview has been scheduled. The details are below.") }}</p>
+{% include "grid_interview/templates/emails/_details.html" %}
+{% if instructions %}<p><b>{{ _("Instructions") }}</b><br>{{ instructions }}</p>{% endif %}
+<p>{{ _("You can join from the candidate portal up to {0} minutes before the start time. Please use a laptop or phone with a working camera and microphone and a stable internet connection.").format(join_window_minutes) }}</p>
+<p><a href="{{ link }}" style="display:inline-block;padding:10px 18px;background:#2563eb;color:#fff;border-radius:6px;text-decoration:none">{{ _("Open candidate portal") }}</a></p>
+<p style="font-size:13px;color:#6b7280">{{ _("First time? Set your password here:") }} <a href="{{ password_link }}">{{ password_link }}</a></p>
+{% else %}
+<p>{{ _("You have been added as an interviewer.") }}</p>
+{% include "grid_interview/templates/emails/_details.html" %}
+{% if instructions %}<p><b>{{ _("Candidate instructions") }}</b><br>{{ instructions }}</p>{% endif %}
+<p><a href="{{ link }}">{{ _("Open the interview") }}</a></p>
+{% endif %}
+{% include "grid_interview/templates/emails/_footer.html" %}

@@ -1,0 +1,89 @@
+{% extends "templates/web.html" %}
+
+{% block head_include %}
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="stylesheet" href="/assets/grid_interview/css/interview_portal.css?v=2">
+<link rel="stylesheet" href="/assets/grid_interview/css/interview_room.css?v=1">
+{% endblock %}
+
+{% block page_content %}
+<div class="gi-room" id="gi-room" data-session="{{ session_name | e }}">
+	{% if error %}
+	<div class="gi-alert err">{{ error }}</div>
+	{% else %}
+	<header class="gi-room-head">
+		<div>
+			<h1 id="gi-room-title">{{ _("Interview room") }}</h1>
+			<div class="gi-meta" id="gi-room-sub"></div>
+		</div>
+		<div class="gi-room-status">
+			<span class="gi-pill gray" id="gi-conn" role="status" aria-live="polite">{{ _("Not connected") }}</span>
+			<span class="gi-pill gray" id="gi-rec" hidden>{{ _("Not recording") }}</span>
+		</div>
+	</header>
+
+	<div class="gi-alert" id="gi-room-msg" hidden role="alert"></div>
+
+	<div class="gi-room-grid">
+		<section class="gi-stage" aria-label="{{ _('Video') }}">
+			<div id="gi-prejoin" class="gi-prejoin">
+				<video id="gi-preview" autoplay playsinline muted aria-label="{{ _('Your camera preview') }}"></video>
+				<div class="gi-devices">
+					<span class="gi-pill gray" id="gi-cam">{{ _("Camera: checking…") }}</span>
+					<span class="gi-pill gray" id="gi-mic">{{ _("Microphone: checking…") }}</span>
+				</div>
+				<p class="gi-meta" id="gi-window"></p>
+				<div id="gi-recording-notice" class="gi-alert info" hidden>
+					{{ _("This interview may be recorded. You will be asked for consent before any recording starts, and a visible indicator is shown while recording.") }}
+				</div>
+				<button class="btn btn-primary btn-lg" id="gi-join" type="button">{{ _("Join interview") }}</button>
+			</div>
+			<div id="gi-meeting" class="gi-meeting" hidden></div>
+			<div id="gi-mock" class="gi-mock" hidden>
+				<div class="gi-alert info">{{ _("Test mode: the Mock video provider shows only your own camera. No audio or video is sent to other participants.") }}</div>
+				<video id="gi-mock-video" autoplay playsinline muted></video>
+			</div>
+			<div class="gi-room-actions" id="gi-actions" hidden>
+				<button class="btn btn-default" id="gi-leave" type="button">{{ _("Leave") }}</button>
+				<button class="btn btn-danger" id="gi-end" type="button" hidden>{{ _("End interview") }}</button>
+			</div>
+			<div id="gi-left" class="gi-card" hidden>
+				<h3 id="gi-left-title">{{ _("You have left the interview") }}</h3>
+				<p class="gi-meta" id="gi-left-text">{{ _("If you were disconnected by mistake you can rejoin while the interview is still open.") }}</p>
+				<button class="btn btn-primary" id="gi-rejoin" type="button">{{ _("Rejoin") }}</button>
+			</div>
+		</section>
+
+		<aside class="gi-side" id="gi-side" aria-label="{{ _('Interview details') }}">
+			<div class="gi-card" id="gi-consent" hidden>
+				<h3>{{ _("Recording consent") }}</h3>
+				<div class="gi-meta" id="gi-consent-text"></div>
+				<div class="form-check" style="margin-top:8px">
+					<input class="form-check-input" type="checkbox" id="gi-consent-rec">
+					<label class="form-check-label" for="gi-consent-rec">{{ _("I agree to this interview being recorded.") }}</label>
+				</div>
+				<div class="form-check" id="gi-consent-ext-row" hidden>
+					<input class="form-check-input" type="checkbox" id="gi-consent-ext">
+					<label class="form-check-label" for="gi-consent-ext">{{ _("I agree that the recording may be transcribed and summarised by an external AI service for the hiring panel.") }}</label>
+				</div>
+				<p class="gi-meta" style="margin-top:6px">{{ _("Consent is optional and you can withdraw it at any time by unticking the box. The interview takes place either way.") }}</p>
+			</div>
+			<div class="gi-card" id="gi-rec-controls" hidden>
+				<h3>{{ _("Recording") }}</h3>
+				<div class="gi-meta" id="gi-rec-blockers"></div>
+				<button class="btn btn-danger btn-sm" id="gi-rec-start" type="button">{{ _("Start recording") }}</button>
+				<button class="btn btn-default btn-sm" id="gi-rec-stop" type="button" hidden>{{ _("Stop recording") }}</button>
+			</div>
+			<div class="gi-card" id="gi-details"></div>
+			<div class="gi-card" id="gi-moderator" hidden></div>
+		</aside>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script src="/assets/grid_interview/js/interview_room.js?v=2"></script>
+{% endblock %}

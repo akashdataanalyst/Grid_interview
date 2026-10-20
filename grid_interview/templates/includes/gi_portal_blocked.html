@@ -1,0 +1,7 @@
+{% if not portal_enabled %}
+<div class="gi-alert info">{{ _("The candidate portal is currently unavailable.") }}</div>
+{% elif not_candidate %}
+<div class="gi-alert info">
+	{{ _("This account is not a candidate account. If you are a candidate, sign out and sign in with the email address your interview invitation was sent to.") }}
+</div>
+{% endif %}

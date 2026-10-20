@@ -1,0 +1,51 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="gi-portal">
+	<h1>{{ _("Account") }}</h1>
+	{% include "templates/includes/gi_portal_header.html" %}
+	{% include "templates/includes/gi_portal_blocked.html" %}
+
+	{% if loaded %}
+	<section class="gi-section">
+		<h2>{{ _("Security") }}</h2>
+		<div class="gi-card">
+			<p>{{ _("Signed in as {0}").format(email | e) }}</p>
+			<p><a class="btn btn-default btn-sm" href="/update-password">{{ _("Change password") }}</a></p>
+			<p class="gi-meta">{{ _("Forgot your password? Sign out and use 'Set or reset password'.") }}</p>
+			<div class="gi-alert" id="gi-sessions-msg" hidden role="status"></div>
+			<button class="btn btn-default btn-sm" id="gi-logout-others">{{ _("Sign out on all other devices") }}</button>
+		</div>
+	</section>
+
+	<section class="gi-section">
+		<h2>{{ _("Emails we sent you") }}</h2>
+		<div class="gi-card">
+			{% if history %}
+			<table class="gi-table">
+				<thead><tr><th>{{ _("Message") }}</th><th>{{ _("Date") }}</th></tr></thead>
+				<tbody>{% for h in history %}<tr><td>{{ _(h.label) }}</td><td>{{ h.when }}</td></tr>{% endfor %}</tbody>
+			</table>
+			{% else %}
+			<div class="gi-empty">{{ _("No emails yet.") }}</div>
+			{% endif %}
+		</div>
+	</section>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+frappe.ready(() => {
+	const btn = document.getElementById("gi-logout-others");
+	if (!btn) return;
+	btn.addEventListener("click", () =>
+		gi.post("grid_interview.api.portal.logout_other_sessions", {})
+			.then(() => gi.message(document.getElementById("gi-sessions-msg"), __("Other devices were signed out.")))
+			.catch((t) => gi.message(document.getElementById("gi-sessions-msg"), t, "err")),
+	);
+});
+</script>
+{% endblock %}

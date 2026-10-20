@@ -1,0 +1,9 @@
+<p>{{ _("Dear {0},").format(reference_person) }}</p>
+<p>
+	{{ _("{0} has named you as a professional reference").format(candidate_name) }}{% if job_title %} {{ _("for the position of {0}").format(job_title) }}{% endif %}{% if relationship %} ({{ _("stated relationship") }}: {{ relationship }}){% endif %}.
+	{{ _("The candidate confirmed that you agreed to be contacted.") }}
+</p>
+<p>{{ _("Answering takes about two minutes. You can also decline.") }}</p>
+<p><a href="{{ link }}" style="display:inline-block;padding:10px 18px;background:#2563eb;color:#fff;border-radius:6px;text-decoration:none">{{ _("Respond to the reference request") }}</a></p>
+<p style="font-size:13px;color:#6b7280">{{ _("This personal link works once and expires in {0} days. Please do not forward it.").format(validity_days) }}</p>
+<p style="font-size:12px;color:#9ca3af">{{ _("If you do not know this person, you can ignore this email.") }}</p>

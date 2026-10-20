@@ -1,0 +1,179 @@
+{
+ "actions": [],
+ "autoname": "field:user",
+ "creation": "2026-10-13 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "full_name",
+  "email",
+  "phone",
+  "cb_main",
+  "status",
+  "registration_source",
+  "privacy_notice_version",
+  "privacy_notice_accepted_on",
+  "sb_profile",
+  "headline",
+  "current_location",
+  "linkedin_url",
+  "cb_profile",
+  "total_experience_years",
+  "highest_qualification",
+  "resume"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Full Name"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Email",
+   "options": "Email",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Active\nDisabled"
+  },
+  {
+   "fieldname": "registration_source",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Registration Source",
+   "options": "Invitation\nSelf Registration\nHR Created",
+   "read_only": 1
+  },
+  {
+   "fieldname": "privacy_notice_version",
+   "fieldtype": "Data",
+   "label": "Accepted Privacy Notice Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "privacy_notice_accepted_on",
+   "fieldtype": "Datetime",
+   "label": "Privacy Notice Accepted On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_profile",
+   "fieldtype": "Section Break",
+   "label": "Profile"
+  },
+  {
+   "fieldname": "headline",
+   "fieldtype": "Data",
+   "label": "Headline"
+  },
+  {
+   "fieldname": "current_location",
+   "fieldtype": "Data",
+   "label": "Current Location"
+  },
+  {
+   "fieldname": "linkedin_url",
+   "fieldtype": "Data",
+   "label": "LinkedIn URL"
+  },
+  {
+   "fieldname": "cb_profile",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_experience_years",
+   "fieldtype": "Float",
+   "label": "Total Experience (years)"
+  },
+  {
+   "fieldname": "highest_qualification",
+   "fieldtype": "Data",
+   "label": "Highest Qualification"
+  },
+  {
+   "description": "Private file.",
+   "fieldname": "resume",
+   "fieldtype": "Attach",
+   "label": "Resume"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grid Interview",
+ "name": "Grid Interview Portal Profile",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview Administrator",
+   "share": 0,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview HR User",
+   "share": 0,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 0
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "full_name",
+ "track_changes": 1
+}

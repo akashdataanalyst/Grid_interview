@@ -1,0 +1,54 @@
+{% extends "templates/web.html" %}
+
+{% block head_include %}
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+{% endblock %}
+
+{% block page_content %}
+<div class="gi-portal gi-narrow">
+	<link rel="stylesheet" href="/assets/grid_interview/css/interview_portal.css?v=2">
+	<h1>{{ _("Join your interview") }}</h1>
+	{% if not token %}
+	<div class="gi-alert info">{{ _("This link is incomplete. Please open the full link from your email.") }}</div>
+	{% else %}
+	<p class="gi-sub">{{ _("This personal link will be tied to this browser. Use the same device if you need to rejoin.") }}</p>
+	<div class="gi-alert" id="gi-join-msg" hidden role="alert"></div>
+	<button class="btn btn-primary btn-lg" id="gi-continue" type="button" data-token="{{ token | e }}">{{ _("Continue to the interview") }}</button>
+	<p class="gi-meta" style="margin-top:16px">{{ _("Have a candidate account?") }} <a href="/login?redirect-to=/interview-portal">{{ _("Sign in instead") }}</a></p>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+	const btn = document.getElementById("gi-continue");
+	if (!btn) return;
+	const box = document.getElementById("gi-join-msg");
+	btn.addEventListener("click", async () => {
+		btn.disabled = true;
+		try {
+			const headers = { "Content-Type": "application/json", Accept: "application/json", "X-Grid-Interview": "1" };
+			if (window.frappe && frappe.csrf_token && frappe.csrf_token !== "None") headers["X-Frappe-CSRF-Token"] = frappe.csrf_token;
+			const res = await fetch("/api/method/grid_interview.api.video.redeem_link", {
+				method: "POST",
+				credentials: "same-origin",
+				headers,
+				body: JSON.stringify({ token: btn.dataset.token }),
+			});
+			const data = await res.json();
+			if (!res.ok) throw data;
+			window.location.href = "/interview/room?session=" + encodeURIComponent(data.message.video_session);
+		} catch (e) {
+			let text = "{{ _('This join link is invalid, has expired or was opened in another browser.') }}";
+			try { text = JSON.parse(JSON.parse(e._server_messages)[0]).message || text; } catch (x) {}
+			if (e && e.exc_type === "RateLimitExceededError") text = "{{ _('Too many attempts. Please wait and try again.') }}";
+			box.className = "gi-alert err"; box.textContent = $("<div>").html(text).text(); box.hidden = false;
+			btn.disabled = false;
+		}
+	});
+});
+</script>
+{% endblock %}

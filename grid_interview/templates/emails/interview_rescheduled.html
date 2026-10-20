@@ -1,0 +1,11 @@
+{% if audience == "Candidate" %}<p>{{ _("Dear {0},").format(candidate_name) }}</p>{% endif %}
+<p>
+	{{ _("The interview has been rescheduled.") }}
+	{% if previous_date %}{{ _("It was planned for {0} at {1}.").format(previous_date, previous_start_time) }}{% endif %}
+	{{ _("The new time is below.") }}
+</p>
+{% include "grid_interview/templates/emails/_details.html" %}
+{% if candidate_message and audience == "Candidate" %}<p>{{ candidate_message }}</p>{% endif %}
+{% if instructions %}<p><b>{{ _("Instructions") }}</b><br>{{ instructions }}</p>{% endif %}
+<p><a href="{{ link }}">{% if audience == "Candidate" %}{{ _("Open candidate portal") }}{% else %}{{ _("Open the interview") }}{% endif %}</a></p>
+{% include "grid_interview/templates/emails/_footer.html" %}

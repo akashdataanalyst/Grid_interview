@@ -1,0 +1,103 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="gi-portal">
+	<h1>{{ _("Profile & Documents") }}</h1>
+	{% include "templates/includes/gi_portal_header.html" %}
+	{% include "templates/includes/gi_portal_blocked.html" %}
+
+	{% if profile %}
+	<section class="gi-section">
+		<h2>{{ _("Your details") }}</h2>
+		<form class="gi-form gi-card" id="gi-profile-form" novalidate>
+			<div class="gi-row">
+				<div class="form-group"><label for="full_name">{{ _("Full name") }}</label>
+					<input class="form-control" id="full_name" name="full_name" value="{{ (profile.full_name or '') | e }}" required maxlength="140" autocomplete="name"></div>
+				<div class="form-group"><label for="email">{{ _("Email") }}</label>
+					<input class="form-control" id="email" value="{{ profile.email | e }}" disabled>
+					<small class="gi-meta">{{ _("Your verified sign-in email cannot be changed here.") }}</small></div>
+			</div>
+			<div class="gi-row">
+				<div class="form-group"><label for="phone">{{ _("Phone") }}</label>
+					<input class="form-control" id="phone" name="phone" value="{{ (profile.phone or '') | e }}" maxlength="30" autocomplete="tel"></div>
+				<div class="form-group"><label for="current_location">{{ _("Current location") }}</label>
+					<input class="form-control" id="current_location" name="current_location" value="{{ (profile.current_location or '') | e }}" maxlength="140"></div>
+			</div>
+			<div class="form-group"><label for="headline">{{ _("Headline") }}</label>
+				<input class="form-control" id="headline" name="headline" value="{{ (profile.headline or '') | e }}" maxlength="140" placeholder="{{ _('e.g. Accountant with 5 years in manufacturing') }}"></div>
+			<div class="gi-row">
+				<div class="form-group"><label for="highest_qualification">{{ _("Highest qualification") }}</label>
+					<input class="form-control" id="highest_qualification" name="highest_qualification" value="{{ (profile.highest_qualification or '') | e }}" maxlength="140"></div>
+				<div class="form-group"><label for="total_experience_years">{{ _("Total experience (years)") }}</label>
+					<input class="form-control" id="total_experience_years" name="total_experience_years" type="number" min="0" max="60" step="0.5" value="{{ profile.total_experience_years or 0 }}"></div>
+			</div>
+			<div class="form-group"><label for="linkedin_url">{{ _("LinkedIn profile URL") }}</label>
+				<input class="form-control" id="linkedin_url" name="linkedin_url" type="url" value="{{ (profile.linkedin_url or '') | e }}" maxlength="200" placeholder="https://www.linkedin.com/in/…"></div>
+			<div class="gi-alert" hidden role="status"></div>
+			<button class="btn btn-primary" type="submit">{{ _("Save details") }}</button>
+		</form>
+	</section>
+
+	<section class="gi-section">
+		<h2>{{ _("Documents") }}</h2>
+		<div class="gi-card">
+			{% if documents %}
+			<table class="gi-table">
+				<thead><tr><th>{{ _("File") }}</th><th>{{ _("Type") }}</th><th>{{ _("Uploaded") }}</th><th></th></tr></thead>
+				<tbody>
+				{% for d in documents %}
+				<tr>
+					<td><a href="/api/method/grid_interview.api.portal.download_document?file={{ d.name | urlencode }}">{{ d.file_name | e }}</a>
+						<span class="gi-meta">({{ d.size_kb }} KB)</span></td>
+					<td>{{ _(d.category) }}</td>
+					<td>{{ d.uploaded }}</td>
+					<td><button class="btn btn-xs btn-default gi-del" data-file="{{ d.name | e }}">{{ _("Remove") }}</button></td>
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+			<div class="gi-empty">{{ _("No documents uploaded yet.") }}</div>
+			{% endif %}
+		</div>
+		<form class="gi-form gi-card" id="gi-upload-form" enctype="multipart/form-data">
+			<div class="gi-row">
+				<div class="form-group"><label for="file">{{ _("File") }}</label>
+					<input class="form-control" id="file" name="file" type="file" accept="{{ accept }}" required></div>
+				<div class="form-group"><label for="category">{{ _("Type") }}</label>
+					<select class="form-control" id="category" name="category">
+						<option value="Resume">{{ _("Resume / CV (replaces the current one)") }}</option>
+						<option value="Document">{{ _("Other requested document") }}</option>
+					</select></div>
+			</div>
+			<p class="gi-meta">{{ _("Allowed: {0}. Maximum {1} MB. Documents are private and visible only to you and the hiring team.").format(allowed, max_mb) }}</p>
+			<div class="gi-alert" hidden role="status"></div>
+			<button class="btn btn-primary" type="submit">{{ _("Upload") }}</button>
+		</form>
+	</section>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+frappe.ready(() => {
+	const form = document.getElementById("gi-profile-form");
+	if (!form) return;
+	gi.bind_form(form, "grid_interview.api.portal.update_profile", {
+		done: (m, box) => gi.message(box, __("Your details were saved.")),
+	});
+	gi.upload(document.getElementById("gi-upload-form"));
+	document.querySelectorAll(".gi-del").forEach((b) =>
+		b.addEventListener("click", (ev) => {
+			ev.preventDefault();
+			if (!confirm(__("Remove this document?"))) return;
+			gi.post("grid_interview.api.portal.delete_document", { file: b.dataset.file })
+				.then(() => window.location.reload())
+				.catch((t) => alert(t));
+		}),
+	);
+});
+</script>
+{% endblock %}

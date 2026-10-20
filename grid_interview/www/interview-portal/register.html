@@ -1,0 +1,42 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="gi-portal gi-narrow">
+	{% include "templates/includes/gi_portal_header.html" %}
+	<h1>{{ _("Create candidate account") }}</h1>
+	{% if not allow_registration %}
+	<div class="gi-alert info">{{ _("Self-registration is not open. If you have been invited to an interview, use the link in your email to set your password.") }}</div>
+	<p><a href="/interview-portal/password">{{ _("Set or reset password") }}</a> · <a href="/login?redirect-to=/interview-portal">{{ _("Sign in") }}</a></p>
+	{% else %}
+	<p class="gi-sub">{{ _("Use the same email address you applied with, so we can show your applications and interviews.") }}</p>
+	<form class="gi-form gi-card" id="gi-register" novalidate>
+		<div class="form-group"><label for="full_name">{{ _("Full name") }}</label>
+			<input class="form-control" id="full_name" name="full_name" required maxlength="140" autocomplete="name"></div>
+		<div class="form-group"><label for="email">{{ _("Email") }}</label>
+			<input class="form-control" id="email" name="email" type="email" required maxlength="140" autocomplete="email"></div>
+		{% if privacy_notice %}
+		<details style="margin:8px 0"><summary>{{ _("Privacy notice") }}</summary><div class="gi-meta" style="margin-top:6px">{{ privacy_notice }}</div></details>
+		{% endif %}
+		<div class="form-check" style="margin:8px 0">
+			<input class="form-check-input" type="checkbox" id="accept_privacy_notice" name="accept_privacy_notice" required>
+			<label class="form-check-label" for="accept_privacy_notice">{{ _("I have read and accept the privacy notice.") }}</label>
+		</div>
+		<div class="gi-alert" hidden role="status"></div>
+		<button class="btn btn-primary btn-block" type="submit">{{ _("Create account") }}</button>
+	</form>
+	<p class="gi-meta">{{ _("Already have an account?") }} <a href="/login?redirect-to=/interview-portal">{{ _("Sign in") }}</a></p>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+frappe.ready(() => {
+	const f = document.getElementById("gi-register");
+	if (f) gi.bind_form(f, "grid_interview.api.portal.register", {
+		done: (m, box) => { gi.message(box, m.message, "ok"); f.querySelector("button").disabled = true; },
+	});
+});
+</script>
+{% endblock %}

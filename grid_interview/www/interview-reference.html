@@ -1,0 +1,66 @@
+{% extends "templates/web.html" %}
+
+{% block head_include %}
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+{% endblock %}
+
+{% block page_content %}
+<div class="gi-portal gi-narrow">
+	{% include "templates/includes/gi_portal_header.html" %}
+	<h1>{{ _("Reference request") }}</h1>
+	{% if not view %}
+	<div class="gi-alert info">{{ _("This link is invalid, has already been used or has expired. If you think this is a mistake, please reply to the email you received.") }}</div>
+	{% else %}
+	<p class="gi-sub">
+		{{ _("Dear {0}, {1} named you as a reference").format(view.reference_person | e, view.candidate_name | e) }}{% if view.job_title %} {{ _("for the position of {0}").format(view.job_title | e) }}{% endif %}.
+		{% if view.relationship %}{{ _("They described your relationship as: {0}.").format(view.relationship | e) }}{% endif %}
+	</p>
+	<form class="gi-form gi-card" id="gi-ref-response" novalidate>
+		<input type="hidden" name="token" value="{{ token | e }}">
+		<div class="form-group"><label>{{ _("Do you know the candidate in the capacity described above?") }} *</label>
+			<select class="form-control" name="relationship_confirmed" required>
+				<option value="">{{ _("Select") }}</option>
+				<option value="Yes">{{ _("Yes") }}</option>
+				<option value="Partly">{{ _("Partly") }}</option>
+				<option value="No">{{ _("No") }}</option>
+			</select></div>
+		<div class="form-group"><label>{{ _("Period you worked together") }}</label>
+			<input class="form-control" name="period" maxlength="200" placeholder="{{ _('e.g. Jan 2021 – Mar 2024') }}"></div>
+		<div class="form-group"><label>{{ _("Would you recommend the candidate for this kind of role?") }}</label>
+			<select class="form-control" name="would_recommend">
+				<option value="">{{ _("Prefer not to say") }}</option>
+				<option value="Yes">{{ _("Yes") }}</option>
+				<option value="No">{{ _("No") }}</option>
+			</select></div>
+		<div class="form-group"><label>{{ _("Comments (job-related only)") }}</label>
+			<textarea class="form-control" name="comments" rows="4" maxlength="4000"></textarea></div>
+		<div class="gi-alert" hidden role="status"></div>
+		<button class="btn btn-primary" type="submit">{{ _("Submit response") }}</button>
+		<button class="btn btn-default" type="button" id="gi-decline">{{ _("Decline to give a reference") }}</button>
+	</form>
+	<p class="gi-meta">{{ _("Your answer is shared only with the hiring team. This link can be used once.") }}</p>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+frappe.ready(() => {
+	const f = document.getElementById("gi-ref-response");
+	if (!f) return;
+	const done = (m, box) => {
+		f.querySelectorAll("input,select,textarea,button").forEach((el) => (el.disabled = true));
+		gi.message(box, m.message, "ok");
+	};
+	gi.bind_form(f, "grid_interview.api.portal.submit_reference_response", { done });
+	document.getElementById("gi-decline").addEventListener("click", () => {
+		if (!confirm(__("Decline this reference request?"))) return;
+		gi.post("grid_interview.api.portal.submit_reference_response", { token: f.token.value, decline: 1 })
+			.then((m) => done(m, f.querySelector(".gi-alert")))
+			.catch((t) => gi.message(f.querySelector(".gi-alert"), t, "err"));
+	});
+});
+</script>
+{% endblock %}

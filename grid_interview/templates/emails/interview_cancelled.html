@@ -1,0 +1,6 @@
+{% if audience == "Candidate" %}<p>{{ _("Dear {0},").format(candidate_name) }}</p>{% endif %}
+<p>{{ _("The following interview has been cancelled.") }}</p>
+{% include "grid_interview/templates/emails/_details.html" %}
+{% if candidate_message and audience == "Candidate" %}<p>{{ candidate_message }}</p>{% endif %}
+{% if audience == "Candidate" %}<p>{{ _("We will contact you if a new interview is scheduled.") }}</p>{% endif %}
+{% include "grid_interview/templates/emails/_footer.html" %}

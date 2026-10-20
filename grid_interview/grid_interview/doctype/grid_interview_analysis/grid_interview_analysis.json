@@ -1,0 +1,257 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-13 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "interview_doctype",
+  "interview",
+  "transcript",
+  "status",
+  "review_status",
+  "cb_main",
+  "provider",
+  "model",
+  "prompt_version",
+  "report_version",
+  "generated_on",
+  "processing_ms",
+  "sb_report",
+  "summary",
+  "provisional_recommendation",
+  "uncertainty_notes",
+  "findings",
+  "report_json",
+  "sb_review",
+  "reviewed_by",
+  "reviewed_on",
+  "cb_review",
+  "review_notes",
+  "retention_until",
+  "error_message"
+ ],
+ "fields": [
+  {
+   "default": "Interview",
+   "fieldname": "interview_doctype",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Interview DocType",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "interview",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Interview",
+   "options": "interview_doctype",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "transcript",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Transcript",
+   "options": "Grid Interview Transcript",
+   "read_only": 1
+  },
+  {
+   "default": "Queued",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Queued\nProcessing\nDraft\nFailed\nDeleted",
+   "read_only": 1
+  },
+  {
+   "default": "Pending Review",
+   "fieldname": "review_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Human Review",
+   "options": "Pending Review\nApproved\nCorrected\nRejected",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "provider",
+   "fieldtype": "Data",
+   "label": "Provider",
+   "read_only": 1
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model",
+   "read_only": 1
+  },
+  {
+   "fieldname": "prompt_version",
+   "fieldtype": "Data",
+   "label": "Prompt Version",
+   "read_only": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "report_version",
+   "fieldtype": "Int",
+   "label": "Report Version",
+   "read_only": 1
+  },
+  {
+   "fieldname": "generated_on",
+   "fieldtype": "Datetime",
+   "label": "Generated On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "processing_ms",
+   "fieldtype": "Int",
+   "label": "Processing Time (ms)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_report",
+   "fieldtype": "Section Break",
+   "label": "AI Draft Report (decision support only, not a hiring decision)"
+  },
+  {
+   "fieldname": "summary",
+   "fieldtype": "Text",
+   "label": "Summary",
+   "read_only": 1
+  },
+  {
+   "fieldname": "provisional_recommendation",
+   "fieldtype": "Select",
+   "label": "Provisional Recommendation (AI)",
+   "options": "\nProceed\nHold\nDo Not Proceed\nInsufficient Evidence",
+   "read_only": 1
+  },
+  {
+   "fieldname": "uncertainty_notes",
+   "fieldtype": "Text",
+   "label": "Uncertainty and Limitations",
+   "read_only": 1
+  },
+  {
+   "fieldname": "findings",
+   "fieldtype": "Table",
+   "label": "Findings",
+   "options": "Grid Interview Analysis Finding",
+   "read_only": 1
+  },
+  {
+   "fieldname": "report_json",
+   "fieldtype": "Code",
+   "hidden": 1,
+   "label": "Validated Report JSON",
+   "options": "JSON",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_review",
+   "fieldtype": "Section Break",
+   "label": "Human Review"
+  },
+  {
+   "fieldname": "reviewed_by",
+   "fieldtype": "Link",
+   "label": "Reviewed By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reviewed_on",
+   "fieldtype": "Datetime",
+   "label": "Reviewed On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_review",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "review_notes",
+   "fieldtype": "Text",
+   "label": "Review Notes"
+  },
+  {
+   "fieldname": "retention_until",
+   "fieldtype": "Date",
+   "label": "Retain Until",
+   "read_only": 1
+  },
+  {
+   "fieldname": "error_message",
+   "fieldtype": "Small Text",
+   "label": "Last Error",
+   "read_only": 1
+  }
+ ],
+ "in_create": 1,
+ "links": [],
+ "modified": "2026-10-13 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grid Interview",
+ "name": "Grid Interview Analysis",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview Administrator",
+   "share": 0,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview HR User",
+   "share": 0
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview Reviewer",
+   "share": 0,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Interviewer",
+   "share": 0
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

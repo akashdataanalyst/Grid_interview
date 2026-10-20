@@ -1,0 +1,106 @@
+{% extends "templates/web.html" %}
+
+{% macro reference_fields(r) %}
+<div class="gi-row">
+	<div class="form-group"><label>{{ _("Referee name") }} *</label>
+		<input class="form-control" name="reference_person" value="{{ (r.reference_person or '') | e }}" required maxlength="140"></div>
+	<div class="form-group"><label>{{ _("Official email") }} *</label>
+		<input class="form-control" name="email" type="email" value="{{ (r.email or '') | e }}" required maxlength="140"></div>
+</div>
+<div class="gi-row">
+	<div class="form-group"><label>{{ _("Designation") }}</label>
+		<input class="form-control" name="designation" value="{{ (r.designation or '') | e }}" maxlength="140"></div>
+	<div class="form-group"><label>{{ _("Company") }}</label>
+		<input class="form-control" name="company" value="{{ (r.company or '') | e }}" maxlength="140"></div>
+</div>
+<div class="gi-row">
+	<div class="form-group"><label>{{ _("Relationship to you") }} *</label>
+		<input class="form-control" name="relationship" value="{{ (r.relationship or '') | e }}" required maxlength="140" placeholder="{{ _('e.g. Reporting manager, 2021–2024') }}"></div>
+	<div class="form-group"><label>{{ _("Contact number (optional)") }}</label>
+		<input class="form-control" name="phone" value="{{ (r.phone or '') | e }}" maxlength="30"></div>
+</div>
+<div class="form-group"><label>{{ _("Notes (optional)") }}</label>
+	<textarea class="form-control" name="candidate_notes" rows="2" maxlength="1000">{{ (r.candidate_notes or '') | e }}</textarea></div>
+{% endmacro %}
+
+{% block page_content %}
+<div class="gi-portal">
+	<h1>{{ _("References") }}</h1>
+	{% include "templates/includes/gi_portal_header.html" %}
+	{% include "templates/includes/gi_portal_blocked.html" %}
+
+	{% if loaded %}
+	<p class="gi-sub">{{ _("Referees receive a short verification request only when HR starts verification. They never see your application, interviews or results.") }}</p>
+
+	{% for r in references %}
+	<div class="gi-card">
+		<span class="gi-pill {{ r.pill }}" style="float:right">{{ _(r.verification_status) }}</span>
+		<h3>{{ r.reference_person | e }}</h3>
+		<div class="gi-meta">{{ r.designation | e }}{% if r.company %}, {{ r.company | e }}{% endif %} · {{ r.relationship | e }} · {{ r.email | e }}</div>
+		{% if r.verification_status == "Clarification Requested" and r.clarification_request %}
+		<div class="gi-alert info"><b>{{ _("HR asks") }}:</b> {{ r.clarification_request | e }}</div>
+		{% endif %}
+		{% if r.editable %}
+		<details style="margin-top:8px"><summary>{{ _("Edit") }}</summary>
+			<form class="gi-form gi-ref-edit" data-name="{{ r.name | e }}" style="margin-top:10px">
+				{{ reference_fields(r) }}
+				<div class="gi-alert" hidden role="status"></div>
+				<button class="btn btn-primary btn-sm" type="submit">{{ _("Save") }}</button>
+				<button class="btn btn-default btn-sm gi-ref-del" type="button">{{ _("Remove") }}</button>
+			</form>
+		</details>
+		{% else %}
+		<p class="gi-meta" style="margin-top:6px">{{ _("Locked while verification is in progress. Contact HR to correct it.") }}</p>
+		{% endif %}
+	</div>
+	{% else %}
+	<div class="gi-empty">{{ _("You have not added any references yet.") }}</div>
+	{% endfor %}
+
+	{% if can_add %}
+	<section class="gi-section">
+		<h2>{{ _("Add a reference") }}</h2>
+		<form class="gi-form gi-card" id="gi-ref-add">
+			{{ reference_fields({}) }}
+			{% if applications|length > 1 %}
+			<div class="form-group"><label>{{ _("For application") }}</label>
+				<select class="form-control" name="job_applicant">
+					{% for a in applications %}<option value="{{ a.job_applicant | e }}">{{ a.job_title | e }}</option>{% endfor %}
+				</select></div>
+			{% elif applications %}
+			<input type="hidden" name="job_applicant" value="{{ applications[0].job_applicant | e }}">
+			{% endif %}
+			<div class="form-check" style="margin:8px 0">
+				<input class="form-check-input" type="checkbox" id="consent_confirmed" name="consent_confirmed" required>
+				<label class="form-check-label" for="consent_confirmed">{{ _("I confirm that this person agreed to be contacted as my referee.") }}</label>
+			</div>
+			<div class="gi-alert" hidden role="status"></div>
+			<button class="btn btn-primary" type="submit">{{ _("Add reference") }}</button>
+		</form>
+	</section>
+	{% endif %}
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+frappe.ready(() => {
+	const add = document.getElementById("gi-ref-add");
+	if (add) gi.bind_form(add, "grid_interview.api.portal.add_reference", { done: () => window.location.reload() });
+	document.querySelectorAll(".gi-ref-edit").forEach((f) => {
+		gi.bind_form(f, "grid_interview.api.portal.update_reference", {
+			extra: () => ({ name: f.dataset.name }),
+			done: () => window.location.reload(),
+		});
+		f.querySelector(".gi-ref-del").addEventListener("click", () => {
+			if (!confirm(__("Remove this reference?"))) return;
+			gi.post("grid_interview.api.portal.delete_reference", { name: f.dataset.name })
+				.then(() => window.location.reload())
+				.catch((t) => gi.message(f.querySelector(".gi-alert"), t, "err"));
+		});
+	});
+});
+</script>
+{% endblock %}

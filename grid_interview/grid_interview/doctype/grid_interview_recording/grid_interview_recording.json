@@ -1,0 +1,255 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-13 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "video_session",
+  "interview_doctype",
+  "interview",
+  "status",
+  "cb_main",
+  "provider_recording_id",
+  "requested_by",
+  "started_on",
+  "ended_on",
+  "duration_seconds",
+  "sb_storage",
+  "storage_backend",
+  "storage_key",
+  "mime_type",
+  "cb_storage",
+  "size_bytes",
+  "sha256",
+  "consents",
+  "expected_size_bytes",
+  "expected_sha256",
+  "upload_chunks",
+  "sb_lifecycle",
+  "retention_until",
+  "deleted_on",
+  "cb_lifecycle",
+  "attempts",
+  "error_message"
+ ],
+ "fields": [
+  {
+   "fieldname": "video_session",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Video Session",
+   "options": "Grid Interview Video Session",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "default": "Interview",
+   "fieldname": "interview_doctype",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Interview DocType",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "interview",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Interview",
+   "options": "interview_doctype",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "Requested",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Requested\nRecording\nFinalizing\nUploading\nStored\nFailed\nSuspended\nDeleted",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "provider_recording_id",
+   "fieldtype": "Data",
+   "label": "Provider Recording ID",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "requested_by",
+   "fieldtype": "Link",
+   "label": "Started By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "started_on",
+   "fieldtype": "Datetime",
+   "label": "Started On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ended_on",
+   "fieldtype": "Datetime",
+   "label": "Ended On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "duration_seconds",
+   "fieldtype": "Int",
+   "label": "Duration (s)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_storage",
+   "fieldtype": "Section Break",
+   "label": "Storage"
+  },
+  {
+   "fieldname": "storage_backend",
+   "fieldtype": "Data",
+   "label": "Storage Backend",
+   "read_only": 1
+  },
+  {
+   "fieldname": "storage_key",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Storage Key",
+   "read_only": 1
+  },
+  {
+   "fieldname": "mime_type",
+   "fieldtype": "Data",
+   "label": "MIME Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_storage",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "size_bytes",
+   "fieldtype": "Int",
+   "label": "Size (bytes)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sha256",
+   "fieldtype": "Data",
+   "label": "SHA-256",
+   "read_only": 1
+  },
+  {
+   "fieldname": "consents",
+   "fieldtype": "Small Text",
+   "label": "Consent Records",
+   "read_only": 1
+  },
+  {
+   "fieldname": "expected_size_bytes",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Expected Upload Size",
+   "read_only": 1
+  },
+  {
+   "fieldname": "expected_sha256",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Expected Upload SHA-256",
+   "read_only": 1
+  },
+  {
+   "fieldname": "upload_chunks",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Upload Chunks",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_lifecycle",
+   "fieldtype": "Section Break",
+   "label": "Lifecycle"
+  },
+  {
+   "fieldname": "retention_until",
+   "fieldtype": "Date",
+   "label": "Retain Until",
+   "read_only": 1
+  },
+  {
+   "fieldname": "deleted_on",
+   "fieldtype": "Datetime",
+   "label": "Deleted On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_lifecycle",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "attempts",
+   "fieldtype": "Int",
+   "label": "Processing Attempts",
+   "read_only": 1
+  },
+  {
+   "fieldname": "error_message",
+   "fieldtype": "Small Text",
+   "label": "Last Error",
+   "read_only": 1
+  }
+ ],
+ "in_create": 1,
+ "links": [],
+ "modified": "2026-10-13 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grid Interview",
+ "name": "Grid Interview Recording",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview Administrator",
+   "share": 0
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview HR User",
+   "share": 0
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview Reviewer",
+   "share": 0
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

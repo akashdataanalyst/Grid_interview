@@ -1,0 +1,6 @@
+<p>{{ _("Dear {0},").format(candidate_name) }}</p>
+<p>{% if job_title %}{{ _("There is an update on your application for {0}.").format(job_title) }}{% else %}{{ _("There is an update on your application.") }}{% endif %}</p>
+{% if action_needed %}<p><b>{{ _("Some information or documents are requested from you.") }}</b></p>{% endif %}
+<p>{{ _("For your privacy, the details are only shown after you sign in.") }}</p>
+<p><a href="{{ link }}" style="display:inline-block;padding:10px 18px;background:#2563eb;color:#fff;border-radius:6px;text-decoration:none">{{ _("Sign in to the candidate portal") }}</a></p>
+<p style="font-size:12px;color:#9ca3af">{{ _("This is an automated message.") }}</p>

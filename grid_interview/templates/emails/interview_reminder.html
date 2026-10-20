@@ -1,0 +1,9 @@
+{% if audience == "Candidate" %}<p>{{ _("Dear {0},").format(candidate_name) }}</p>{% endif %}
+<p>{{ _("This is a reminder of the upcoming interview.") }}</p>
+{% include "grid_interview/templates/emails/_details.html" %}
+{% if audience == "Candidate" %}
+<p>{{ _("The Join button in the candidate portal becomes available {0} minutes before the start time.").format(join_window_minutes) }}</p>
+{% if instructions %}<p><b>{{ _("Instructions") }}</b><br>{{ instructions }}</p>{% endif %}
+{% endif %}
+<p><a href="{{ link }}">{% if audience == "Candidate" %}{{ _("Open candidate portal") }}{% else %}{{ _("Open the interview") }}{% endif %}</a></p>
+{% include "grid_interview/templates/emails/_footer.html" %}

@@ -1,0 +1,8 @@
+<p>{{ _("Dear {0},").format(candidate_name) }}</p>
+<p>{{ _("Here is your personal link to join the online interview. You do not need a password for it.") }}</p>
+{% include "grid_interview/templates/emails/_details.html" %}
+<p><a href="{{ join_link }}" style="display:inline-block;padding:10px 18px;background:#2563eb;color:#fff;border-radius:6px;text-decoration:none">{{ _("Join the interview") }}</a></p>
+<p style="font-size:13px;color:#6b7280">
+	{{ _("The link works from {0} minutes before the start time. It becomes tied to the first browser you open it in, so please use the same device to rejoin. Do not forward this email.").format(join_window_minutes) }}
+</p>
+{% include "grid_interview/templates/emails/_footer.html" %}

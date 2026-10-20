@@ -1,0 +1,654 @@
+{
+ "actions": [],
+ "creation": "2026-10-13 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sb_portal",
+  "enable_candidate_portal",
+  "allow_self_registration",
+  "portal_base_url",
+  "cb_portal",
+  "support_email",
+  "support_phone",
+  "disclose_interviewer_names",
+  "privacy_notice_version",
+  "max_upload_size_mb",
+  "allowed_upload_extensions",
+  "max_documents_per_candidate",
+  "malware_scan_method",
+  "max_references",
+  "reference_link_validity_days",
+  "sb_schedule",
+  "join_window_before_minutes",
+  "join_window_after_end_minutes",
+  "access_link_validity_hours",
+  "cb_schedule",
+  "enable_email_notifications",
+  "auto_manage_desk_interviews",
+  "reminder_offsets_minutes",
+  "max_email_attempts",
+  "sb_video",
+  "video_provider",
+  "jitsi_domain",
+  "jitsi_app_id",
+  "jitsi_app_secret",
+  "cb_video",
+  "jitsi_jwt_audience",
+  "jitsi_token_ttl_minutes",
+  "enable_lobby",
+  "presence_timeout_seconds",
+  "allow_link_join",
+  "sb_recording",
+  "enable_recording",
+  "consent_policy_version",
+  "max_recording_minutes",
+  "max_recording_size_mb",
+  "max_concurrent_recordings",
+  "recording_webhook_secret",
+  "cb_recording",
+  "consent_text",
+  "privacy_notice",
+  "sb_storage",
+  "storage_backend",
+  "local_storage_path",
+  "min_free_disk_gb",
+  "ingest_chunk_mb",
+  "on_consent_withdrawal",
+  "s3_bucket",
+  "s3_region",
+  "s3_prefix",
+  "cb_storage",
+  "s3_endpoint_url",
+  "s3_access_key_id",
+  "s3_secret_access_key",
+  "signed_url_ttl_seconds",
+  "sb_processing",
+  "enable_external_processing",
+  "transcription_provider",
+  "transcription_api_base",
+  "transcription_api_key",
+  "transcription_model",
+  "transcription_language",
+  "cb_processing",
+  "ai_provider",
+  "ai_max_transcript_chars",
+  "ai_api_base",
+  "ai_api_key",
+  "ai_model",
+  "https_proxy",
+  "request_timeout_seconds",
+  "sb_jobs",
+  "processing_queue",
+  "max_job_attempts",
+  "cb_jobs",
+  "retry_base_seconds",
+  "sb_retention",
+  "retention_access_session_days",
+  "retention_recording_days",
+  "retention_transcript_days",
+  "cb_retention",
+  "retention_analysis_days",
+  "retention_audit_log_days",
+  "retention_notification_log_days"
+ ],
+ "fields": [
+  {
+   "fieldname": "sb_portal",
+   "fieldtype": "Section Break",
+   "label": "Candidate Portal"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_candidate_portal",
+   "fieldtype": "Check",
+   "label": "Enable Candidate Portal"
+  },
+  {
+   "default": "0",
+   "description": "Candidates can create an account from the portal. Only applicants whose email matches a Job Applicant see interviews.",
+   "fieldname": "allow_self_registration",
+   "fieldtype": "Check",
+   "label": "Allow Candidate Self-Registration"
+  },
+  {
+   "description": "e.g. https://careers.example.com. Used in emails. Leave blank to use the site URL.",
+   "fieldname": "portal_base_url",
+   "fieldtype": "Data",
+   "label": "Public Portal Base URL"
+  },
+  {
+   "fieldname": "cb_portal",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "support_email",
+   "fieldtype": "Data",
+   "label": "Support Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "support_phone",
+   "fieldtype": "Data",
+   "label": "Support Phone",
+   "options": "Phone"
+  },
+  {
+   "default": "0",
+   "fieldname": "disclose_interviewer_names",
+   "fieldtype": "Check",
+   "label": "Show Interviewer Names to Candidates"
+  },
+  {
+   "default": "v1",
+   "fieldname": "privacy_notice_version",
+   "fieldtype": "Data",
+   "label": "Privacy Notice Version"
+  },
+  {
+   "default": "10",
+   "fieldname": "max_upload_size_mb",
+   "fieldtype": "Int",
+   "label": "Max Candidate Upload Size (MB)"
+  },
+  {
+   "default": "pdf,doc,docx,jpg,jpeg,png",
+   "fieldname": "allowed_upload_extensions",
+   "fieldtype": "Data",
+   "label": "Allowed Upload Extensions"
+  },
+  {
+   "default": "20",
+   "fieldname": "max_documents_per_candidate",
+   "fieldtype": "Int",
+   "label": "Max Documents per Candidate"
+  },
+  {
+   "description": "Dotted path to a function(content: bytes, filename: str) -> bool that returns True for clean files, e.g. a ClamAV wrapper. Uploads are rejected if it returns False or fails.",
+   "fieldname": "malware_scan_method",
+   "fieldtype": "Data",
+   "label": "Malware Scan Method (optional)"
+  },
+  {
+   "default": "5",
+   "fieldname": "max_references",
+   "fieldtype": "Int",
+   "label": "Max References per Candidate"
+  },
+  {
+   "default": "7",
+   "fieldname": "reference_link_validity_days",
+   "fieldtype": "Int",
+   "label": "Reference Verification Link Validity (days)"
+  },
+  {
+   "fieldname": "sb_schedule",
+   "fieldtype": "Section Break",
+   "label": "Scheduling and Notifications"
+  },
+  {
+   "default": "15",
+   "fieldname": "join_window_before_minutes",
+   "fieldtype": "Int",
+   "label": "Join Window Opens (minutes before start)"
+  },
+  {
+   "default": "30",
+   "fieldname": "join_window_after_end_minutes",
+   "fieldtype": "Int",
+   "label": "Join Window Closes (minutes after end)"
+  },
+  {
+   "default": "0",
+   "fieldname": "access_link_validity_hours",
+   "fieldtype": "Int",
+   "label": "Access Link Validity After Issue (hours, 0 = until join window closes)"
+  },
+  {
+   "fieldname": "cb_schedule",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_email_notifications",
+   "fieldtype": "Check",
+   "label": "Enable Email Notifications"
+  },
+  {
+   "default": "1",
+   "description": "Draft interviews created in the standard HRMS Interview form, for a future time, get a video session and invitation emails automatically (within 5 minutes), the same as the Interview Scheduler.",
+   "fieldname": "auto_manage_desk_interviews",
+   "fieldtype": "Check",
+   "label": "Auto-manage Interviews Created in HRMS"
+  },
+  {
+   "default": "1440,60,15",
+   "description": "Comma-separated, e.g. 1440,60,15. Leave blank for no reminders.",
+   "fieldname": "reminder_offsets_minutes",
+   "fieldtype": "Data",
+   "label": "Reminder Offsets (minutes before start)"
+  },
+  {
+   "default": "3",
+   "fieldname": "max_email_attempts",
+   "fieldtype": "Int",
+   "label": "Max Email Attempts"
+  },
+  {
+   "fieldname": "sb_video",
+   "fieldtype": "Section Break",
+   "label": "Video"
+  },
+  {
+   "default": "Mock",
+   "fieldname": "video_provider",
+   "fieldtype": "Select",
+   "label": "Video Provider",
+   "options": "Mock\nJitsi",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.video_provider=='Jitsi'",
+   "description": "Self-hosted Jitsi host name, e.g. meet.example.com (HTTPS).",
+   "fieldname": "jitsi_domain",
+   "fieldtype": "Data",
+   "label": "Jitsi Domain"
+  },
+  {
+   "depends_on": "eval:doc.video_provider=='Jitsi'",
+   "fieldname": "jitsi_app_id",
+   "fieldtype": "Data",
+   "label": "Jitsi JWT App ID"
+  },
+  {
+   "depends_on": "eval:doc.video_provider=='Jitsi'",
+   "fieldname": "jitsi_app_secret",
+   "fieldtype": "Password",
+   "label": "Jitsi JWT App Secret"
+  },
+  {
+   "fieldname": "cb_video",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "jitsi",
+   "depends_on": "eval:doc.video_provider=='Jitsi'",
+   "description": "Must match JWT_ACCEPTED_AUDIENCES on the Jitsi server.",
+   "fieldname": "jitsi_jwt_audience",
+   "fieldtype": "Data",
+   "label": "Jitsi JWT Audience"
+  },
+  {
+   "default": "120",
+   "fieldname": "jitsi_token_ttl_minutes",
+   "fieldtype": "Int",
+   "label": "Meeting Token Lifetime (minutes)"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_lobby",
+   "fieldtype": "Check",
+   "label": "Enable Lobby / Waiting Room"
+  },
+  {
+   "default": "120",
+   "description": "A participant without a heartbeat for this long is treated as disconnected.",
+   "fieldname": "presence_timeout_seconds",
+   "fieldtype": "Int",
+   "label": "Presence Timeout (seconds)"
+  },
+  {
+   "default": "0",
+   "description": "HR can email a candidate a single-person join link that works without signing in. The link is bound to the first browser that opens it.",
+   "fieldname": "allow_link_join",
+   "fieldtype": "Check",
+   "label": "Allow Passwordless Join Links"
+  },
+  {
+   "fieldname": "sb_recording",
+   "fieldtype": "Section Break",
+   "label": "Recording and Consent"
+  },
+  {
+   "default": "0",
+   "description": "Recording also needs a working Jibri and storage, and consent from every participant.",
+   "fieldname": "enable_recording",
+   "fieldtype": "Check",
+   "label": "Enable Recording"
+  },
+  {
+   "default": "v1",
+   "fieldname": "consent_policy_version",
+   "fieldtype": "Data",
+   "label": "Consent Policy Version"
+  },
+  {
+   "default": "120",
+   "fieldname": "max_recording_minutes",
+   "fieldtype": "Int",
+   "label": "Max Recording Duration (minutes)"
+  },
+  {
+   "default": "2048",
+   "fieldname": "max_recording_size_mb",
+   "fieldtype": "Int",
+   "label": "Max Recording Size (MB)"
+  },
+  {
+   "default": "1",
+   "fieldname": "max_concurrent_recordings",
+   "fieldtype": "Int",
+   "label": "Max Concurrent Recordings"
+  },
+  {
+   "fieldname": "recording_webhook_secret",
+   "fieldtype": "Password",
+   "label": "Recording Webhook Secret"
+  },
+  {
+   "fieldname": "cb_recording",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Shown to every participant before recording. Must be reviewed by HR/legal.",
+   "fieldname": "consent_text",
+   "fieldtype": "Text Editor",
+   "label": "Recording Consent Text"
+  },
+  {
+   "fieldname": "privacy_notice",
+   "fieldtype": "Text Editor",
+   "label": "Candidate Privacy Notice"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_storage",
+   "fieldtype": "Section Break",
+   "label": "Recording Storage"
+  },
+  {
+   "default": "Local Private",
+   "fieldname": "storage_backend",
+   "fieldtype": "Select",
+   "label": "Storage Backend",
+   "options": "Local Private\nS3"
+  },
+  {
+   "depends_on": "eval:doc.storage_backend=='Local Private'",
+   "description": "Absolute path on the server (EBS). Blank = <site>/private/grid_interview_recordings. Not served by the web server; recordings are streamed only through the authorized endpoint.",
+   "fieldname": "local_storage_path",
+   "fieldtype": "Data",
+   "label": "Local Storage Folder"
+  },
+  {
+   "default": "5",
+   "description": "New recordings are refused below this free space.",
+   "fieldname": "min_free_disk_gb",
+   "fieldtype": "Int",
+   "label": "Minimum Free Disk (GB)"
+  },
+  {
+   "default": "20",
+   "description": "Must stay below the web server body limit (50 MB).",
+   "fieldname": "ingest_chunk_mb",
+   "fieldtype": "Int",
+   "label": "Upload Chunk Size (MB)"
+  },
+  {
+   "default": "Suspend",
+   "description": "Suspend: stop recording and hide the file from playback until HR decides (for legal hold). Delete: remove it once processing stops.",
+   "fieldname": "on_consent_withdrawal",
+   "fieldtype": "Select",
+   "label": "On Consent Withdrawal",
+   "options": "Suspend\nDelete"
+  },
+  {
+   "depends_on": "eval:doc.storage_backend=='S3'",
+   "fieldname": "s3_bucket",
+   "fieldtype": "Data",
+   "label": "S3 Bucket"
+  },
+  {
+   "depends_on": "eval:doc.storage_backend=='S3'",
+   "fieldname": "s3_region",
+   "fieldtype": "Data",
+   "label": "S3 Region"
+  },
+  {
+   "default": "grid-interview/",
+   "depends_on": "eval:doc.storage_backend=='S3'",
+   "fieldname": "s3_prefix",
+   "fieldtype": "Data",
+   "label": "S3 Key Prefix"
+  },
+  {
+   "fieldname": "cb_storage",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.storage_backend=='S3'",
+   "fieldname": "s3_endpoint_url",
+   "fieldtype": "Data",
+   "label": "S3 Endpoint URL (optional)"
+  },
+  {
+   "depends_on": "eval:doc.storage_backend=='S3'",
+   "description": "Leave blank to use the EC2 instance IAM role.",
+   "fieldname": "s3_access_key_id",
+   "fieldtype": "Data",
+   "label": "S3 Access Key ID"
+  },
+  {
+   "depends_on": "eval:doc.storage_backend=='S3'",
+   "fieldname": "s3_secret_access_key",
+   "fieldtype": "Password",
+   "label": "S3 Secret Access Key"
+  },
+  {
+   "default": "300",
+   "fieldname": "signed_url_ttl_seconds",
+   "fieldtype": "Int",
+   "label": "Signed URL Lifetime (seconds)"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_processing",
+   "fieldtype": "Section Break",
+   "label": "Transcription and AI"
+  },
+  {
+   "default": "0",
+   "description": "Only enable after the privacy notice covers external processing and candidates consent to it.",
+   "fieldname": "enable_external_processing",
+   "fieldtype": "Check",
+   "label": "Allow Sending Recordings/Transcripts to External Providers"
+  },
+  {
+   "default": "Disabled",
+   "fieldname": "transcription_provider",
+   "fieldtype": "Select",
+   "label": "Transcription Provider",
+   "options": "Disabled\nOpenAI Compatible\nMock (testing only)"
+  },
+  {
+   "default": "https://api.openai.com/v1",
+   "fieldname": "transcription_api_base",
+   "fieldtype": "Data",
+   "label": "Transcription API Base URL"
+  },
+  {
+   "fieldname": "transcription_api_key",
+   "fieldtype": "Password",
+   "label": "Transcription API Key"
+  },
+  {
+   "default": "whisper-1",
+   "fieldname": "transcription_model",
+   "fieldtype": "Data",
+   "label": "Transcription Model"
+  },
+  {
+   "description": "Blank = auto-detect (recommended for mixed Hindi-English).",
+   "fieldname": "transcription_language",
+   "fieldtype": "Data",
+   "label": "Transcription Language Hint"
+  },
+  {
+   "fieldname": "cb_processing",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Disabled",
+   "fieldname": "ai_provider",
+   "fieldtype": "Select",
+   "label": "AI Analysis Provider",
+   "options": "Disabled\nOpenAI Compatible\nMock (testing only)"
+  },
+  {
+   "default": "120000",
+   "fieldname": "ai_max_transcript_chars",
+   "fieldtype": "Int",
+   "label": "Max Transcript Characters Sent to AI"
+  },
+  {
+   "default": "https://api.openai.com/v1",
+   "fieldname": "ai_api_base",
+   "fieldtype": "Data",
+   "label": "AI API Base URL"
+  },
+  {
+   "fieldname": "ai_api_key",
+   "fieldtype": "Password",
+   "label": "AI API Key"
+  },
+  {
+   "fieldname": "ai_model",
+   "fieldtype": "Data",
+   "label": "AI Model"
+  },
+  {
+   "description": "e.g. http://172.17.0.1:3128",
+   "fieldname": "https_proxy",
+   "fieldtype": "Data",
+   "label": "HTTPS Proxy for Providers (optional)"
+  },
+  {
+   "default": "300",
+   "fieldname": "request_timeout_seconds",
+   "fieldtype": "Int",
+   "label": "Provider Request Timeout (seconds)"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_jobs",
+   "fieldtype": "Section Break",
+   "label": "Background Jobs"
+  },
+  {
+   "default": "long",
+   "fieldname": "processing_queue",
+   "fieldtype": "Select",
+   "label": "Processing Queue",
+   "options": "long\ndefault\nshort"
+  },
+  {
+   "default": "5",
+   "fieldname": "max_job_attempts",
+   "fieldtype": "Int",
+   "label": "Max Attempts per Job"
+  },
+  {
+   "fieldname": "cb_jobs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "60",
+   "fieldname": "retry_base_seconds",
+   "fieldtype": "Int",
+   "label": "Retry Backoff Base (seconds)"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_retention",
+   "fieldtype": "Section Break",
+   "label": "Retention (days, 0 = keep)"
+  },
+  {
+   "default": "90",
+   "fieldname": "retention_access_session_days",
+   "fieldtype": "Int",
+   "label": "Access Sessions"
+  },
+  {
+   "default": "180",
+   "fieldname": "retention_recording_days",
+   "fieldtype": "Int",
+   "label": "Recordings"
+  },
+  {
+   "default": "365",
+   "fieldname": "retention_transcript_days",
+   "fieldtype": "Int",
+   "label": "Transcripts"
+  },
+  {
+   "fieldname": "cb_retention",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "365",
+   "fieldname": "retention_analysis_days",
+   "fieldtype": "Int",
+   "label": "AI Analyses"
+  },
+  {
+   "default": "1095",
+   "fieldname": "retention_audit_log_days",
+   "fieldtype": "Int",
+   "label": "Audit Logs"
+  },
+  {
+   "default": "180",
+   "fieldname": "retention_notification_log_days",
+   "fieldtype": "Int",
+   "label": "Notification Logs"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-18 23:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grid Interview",
+ "name": "Grid Interview Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview Administrator",
+   "share": 0,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 0,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

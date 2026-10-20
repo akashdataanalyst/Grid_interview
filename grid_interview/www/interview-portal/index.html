@@ -1,0 +1,88 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="gi-portal">
+	<h1>{{ _("My Interviews") }}</h1>
+	{% include "templates/includes/gi_portal_header.html" %}
+	{% include "templates/includes/gi_portal_blocked.html" %}
+
+	{% if data %}
+	<p class="gi-sub">{{ _("Welcome, {0}").format(data.profile.full_name | e) }}</p>
+
+	{% if not data.hrms_available %}
+	<div class="gi-alert info">{{ _("Interview information is not available right now.") }}</div>
+	{% endif %}
+
+	<section class="gi-section" aria-labelledby="gi-upcoming">
+		<h2 id="gi-upcoming">{{ _("Upcoming interviews") }}</h2>
+		{% for i in data.upcoming %}
+		<div class="gi-card">
+			<span class="gi-pill {{ i.pill }}" style="float:right">{{ _(i.status_label) }}</span>
+			<h3>{{ (i.job_title or _("Interview")) | e }}</h3>
+			<div class="gi-meta">{{ i.round | e }}</div>
+			<p style="margin:10px 0 4px"><b>{{ i.when }}</b> · {{ i.time }}</p>
+			{% if i.interviewers %}<div class="gi-meta">{{ _("Interviewers") }}: {{ i.interviewers | join(", ") | e }}</div>{% endif %}
+			{% if i.instructions %}<p class="gi-meta" style="white-space:pre-line">{{ i.instructions | e }}</p>{% endif %}
+			{% if i.may_be_recorded %}
+			<p class="gi-meta">{{ _("This interview may be recorded. You will be asked for your consent before any recording starts, and you can decline.") }}</p>
+			{% endif %}
+			{% if i.can_join %}
+			<p><a class="btn btn-primary" href="/interview/room?session={{ i.name | urlencode }}">{{ _("Join interview") }}</a></p>
+			{% else %}
+			<p class="gi-meta">{{ _("You can join from {0}. Use a device with a camera, microphone and a stable connection.").format(i.opens) }}</p>
+			{% endif %}
+		</div>
+		{% else %}
+		<div class="gi-empty">{{ _("No upcoming interviews.") }}</div>
+		{% endfor %}
+	</section>
+
+	<section class="gi-section" aria-labelledby="gi-apps">
+		<h2 id="gi-apps">{{ _("My applications") }}</h2>
+		{% for a in data.applications %}
+		<div class="gi-card">
+			<span class="gi-pill {{ a.pill }}" style="float:right">{{ _(a.status) }}</span>
+			<h3>{{ a.job_title | e }}</h3>
+		</div>
+		{% else %}
+		<div class="gi-empty">{{ _("We could not find an application for {0}. Applications are matched by email address.").format(data.profile.email | e) }}</div>
+		{% endfor %}
+	</section>
+
+	{% if data.results %}
+	<section class="gi-section" aria-labelledby="gi-results">
+		<h2 id="gi-results">{{ _("Results and feedback") }}</h2>
+		{% for r in data.results %}
+		<div class="gi-card">
+			<span class="gi-pill {{ r.pill }}" style="float:right">{{ _(r.candidate_status) }}</span>
+			<div class="gi-meta">{{ _("Published on {0}").format(r.published_label) }}</div>
+			{% if r.result_summary %}<p style="white-space:pre-line;margin-top:8px">{{ r.result_summary | e }}</p>{% endif %}
+			{% if r.next_steps %}<p><b>{{ _("Next steps") }}</b><br><span style="white-space:pre-line">{{ r.next_steps | e }}</span></p>{% endif %}
+			{% if r.documents_requested %}
+			<div class="gi-alert info"><b>{{ _("Documents requested") }}:</b> {{ r.documents_requested | e }}
+				<a href="/interview-portal/profile">{{ _("Upload documents") }}</a></div>
+			{% endif %}
+		</div>
+		{% endfor %}
+	</section>
+	{% endif %}
+
+	<section class="gi-section" aria-labelledby="gi-past">
+		<h2 id="gi-past">{{ _("Past interviews") }}</h2>
+		{% for i in data.past %}
+		<div class="gi-card">
+			<span class="gi-pill {{ i.pill }}" style="float:right">{{ _(i.status_label) }}</span>
+			<h3>{{ (i.job_title or _("Interview")) | e }}</h3>
+			<div class="gi-meta">{{ i.round | e }} · {{ i.when }} · {{ i.time }}</div>
+		</div>
+		{% else %}
+		<div class="gi-empty">{{ _("No past interviews.") }}</div>
+		{% endfor %}
+	</section>
+
+	{% if support_email or support_phone %}
+	<p class="gi-meta gi-section">{{ _("Need help?") }} {{ support_email | e }} {{ support_phone | e }}</p>
+	{% endif %}
+	{% endif %}
+</div>
+{% endblock %}

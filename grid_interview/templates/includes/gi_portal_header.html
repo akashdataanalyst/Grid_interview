@@ -1,0 +1,8 @@
+<link rel="stylesheet" href="/assets/grid_interview/css/interview_portal.css?v=1">
+<script src="/assets/grid_interview/js/interview_portal.js?v=2" defer></script>
+{% if nav %}
+<nav class="gi-nav" aria-label="{{ _('Candidate portal') }}">
+	{% for item in nav %}<a href="{{ item.route }}" class="{{ 'active' if item.active else '' }}" {% if item.active %}aria-current="page"{% endif %}>{{ item.label }}</a>{% endfor %}
+	<a href="/?cmd=web_logout" style="margin-left:auto">{{ _("Sign out") }}</a>
+</nav>
+{% endif %}

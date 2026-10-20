@@ -1,0 +1,11 @@
+{# Shared interview details block. Every variable is HTML-escaped by build_context(). #}
+<table style="border-collapse:collapse;margin:12px 0;font-size:14px">
+	<tr><td style="padding:4px 12px 4px 0;color:#6b7280">{{ _("Position") }}</td><td style="padding:4px 0"><b>{{ job_title or interview_type }}</b></td></tr>
+	<tr><td style="padding:4px 12px 4px 0;color:#6b7280">{{ _("Round") }}</td><td style="padding:4px 0">{{ interview_type }}</td></tr>
+	{% if audience != "Candidate" %}
+	<tr><td style="padding:4px 12px 4px 0;color:#6b7280">{{ _("Candidate") }}</td><td style="padding:4px 0">{{ candidate_name }}</td></tr>
+	{% endif %}
+	<tr><td style="padding:4px 12px 4px 0;color:#6b7280">{{ _("Date") }}</td><td style="padding:4px 0">{{ weekday }}, {{ date }}</td></tr>
+	<tr><td style="padding:4px 12px 4px 0;color:#6b7280">{{ _("Time") }}</td><td style="padding:4px 0">{{ start_time }} – {{ end_time }} ({{ timezone }}, {{ duration_minutes }} {{ _("minutes") }})</td></tr>
+	<tr><td style="padding:4px 12px 4px 0;color:#6b7280">{{ _("Mode") }}</td><td style="padding:4px 0">{{ _("Online video interview") }}</td></tr>
+</table>

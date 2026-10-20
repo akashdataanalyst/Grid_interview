@@ -1,0 +1,63 @@
+{
+ "actions": [],
+ "creation": "2026-10-13 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "start_seconds",
+  "end_seconds",
+  "speaker_label",
+  "speaker_uncertain",
+  "confidence",
+  "text"
+ ],
+ "fields": [
+  {
+   "fieldname": "start_seconds",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Start (s)"
+  },
+  {
+   "fieldname": "end_seconds",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "End (s)"
+  },
+  {
+   "fieldname": "speaker_label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Speaker"
+  },
+  {
+   "fieldname": "speaker_uncertain",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Speaker Uncertain"
+  },
+  {
+   "fieldname": "confidence",
+   "fieldtype": "Float",
+   "label": "Confidence"
+  },
+  {
+   "fieldname": "text",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Text"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-13 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grid Interview",
+ "name": "Grid Interview Transcript Segment",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

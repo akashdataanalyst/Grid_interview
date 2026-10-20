@@ -1,0 +1,179 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-13 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "applicant_doctype",
+  "job_applicant",
+  "interview_doctype",
+  "interview",
+  "candidate_status",
+  "cb_main",
+  "published",
+  "published_on",
+  "published_by",
+  "sb_text",
+  "result_summary",
+  "next_steps",
+  "documents_requested",
+  "sb_internal",
+  "internal_note"
+ ],
+ "fields": [
+  {
+   "default": "Job Applicant",
+   "fieldname": "applicant_doctype",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Applicant DocType",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "job_applicant",
+   "fieldtype": "Dynamic Link",
+   "in_standard_filter": 1,
+   "label": "Job Applicant",
+   "options": "applicant_doctype",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "Interview",
+   "fieldname": "interview_doctype",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Interview DocType",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "interview",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Interview",
+   "options": "interview_doctype",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "candidate_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Candidate-Facing Status",
+   "options": "Applied\nUnder Review\nInterview Scheduled\nInterview Completed\nNext Round\nOn Hold\nSelected\nNot Selected",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "published",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Published to Candidate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "published_on",
+   "fieldtype": "Datetime",
+   "label": "Published On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "published_by",
+   "fieldtype": "Link",
+   "label": "Published By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_text",
+   "fieldtype": "Section Break",
+   "label": "Shown to the Candidate"
+  },
+  {
+   "description": "Written and approved by HR. Do not paste interviewer notes, AI output, salary discussions or other confidential content.",
+   "fieldname": "result_summary",
+   "fieldtype": "Text",
+   "label": "Result / Feedback Summary"
+  },
+  {
+   "fieldname": "next_steps",
+   "fieldtype": "Text",
+   "label": "Next Steps"
+  },
+  {
+   "fieldname": "documents_requested",
+   "fieldtype": "Small Text",
+   "label": "Additional Documents Requested"
+  },
+  {
+   "fieldname": "sb_internal",
+   "fieldtype": "Section Break",
+   "label": "Internal"
+  },
+  {
+   "fieldname": "internal_note",
+   "fieldtype": "Small Text",
+   "label": "Internal Note (never shown)",
+   "permlevel": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-13 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grid Interview",
+ "name": "Grid Interview Result",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview Administrator",
+   "share": 0,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 0,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Grid Interview HR User",
+   "share": 0,
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Grid Interview Administrator",
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Grid Interview HR User",
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "job_applicant",
+ "track_changes": 1
+}
